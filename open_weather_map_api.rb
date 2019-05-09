@@ -29,7 +29,6 @@ temp = f_to_c(main["temp"])
 pressure = main["pressure"]
 humidity = main["humidity"]
 wind_speed = json["wind"]["speed"]
-puts wind_speed
-puts "Temperatura dla miasta #{name} wynosi #{temp} stopni Celcjusza(od #{min_temp} do #{max_temp})"
+clouds = json["clouds"]["all"]
 
-ap json
+puts "Pogoda dla miasta #{name}\nOpady: #{weather_description}\nTemperatura: #{temp} stopni Celcjusza(od #{min_temp} do #{max_temp})\nCisnienie: #{pressure}hpa\nPredkość wiatru: #{wind_speed}mph\nWilgotność powietrza: #{humidity}%\nZachmurzenie: #{clouds}%"
