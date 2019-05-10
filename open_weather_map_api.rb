@@ -82,8 +82,8 @@ Pony.mail({
     :address              => 'smtp.gmail.com',
     :port                 => '587',
     :enable_starttls_auto => true,
-    :user_name            => 'grzelubot@gmail.com',
-    :password             => 'Grzelubot1@3',
+    :user_name            => #your_mail_name,
+    :password             => #your_mail_password,
     :authentication       => :plain, 
     :domain               => "localhost.localdomain"
   }
