@@ -2,7 +2,6 @@ require "faraday"
 require "awesome_print"
 require "json"
 require "pony"
-require "easy_translate"
 
 def f_to_c f
   celsius = (f - 32)/1.8
