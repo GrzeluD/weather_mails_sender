@@ -19,7 +19,7 @@ def translation word
   when "scattered clouds"
     "Zachmurzenie"
   when "broken clouds"
-    "Załamanie chmury"
+    "Załamane chmury"
   when "rain"
     "Deszcz"
   when "thunderstorm"
@@ -43,10 +43,10 @@ response = conn.get '/data/2.5/weather?units=imperial&lat=50.135&lon=19.632&APPI
   request.headers["Content-Type"] = "application/json"
 end
 body = response.body
+
 json = JSON.parse(body)
 
 main = json["main"]
-
 name = json["name"]
 weather_description = json["weather"].first["description"]
 icon = json["weather"].first["icon"]
@@ -59,12 +59,14 @@ humidity = main["humidity"]
 wind_speed = json["wind"]["speed"]
 clouds = json["clouds"]["all"]
 time = Time.new
-current_time = "#{time.hour}:#{time.min} #{time.day}.#{time.month}.#{time.year}"
+time_min = if time.min < 10 then "0" + time.min.to_s else time.min end
+time_month = if time.month < 10 then "0" + time.month.to_s else time.month end
+current_time = "#{time.hour}:#{time_min} #{time.day}.#{time_month}.#{time.year}"
 
 message_html = "<h2 style='text-align: center'>Pogoda dla miasta #{name}</h2><br><img src=#{icon_src} width='50' height ='50'><p>Opady: #{translation(weather_description)}</p><p>Temperatura: #{temp} stopni Celsjusza(od #{min_temp} do #{max_temp})</p><p>Cisnienie: #{pressure}hpa</p><p>Predkość wiatru: #{wind_speed}mph</p><p>Wilgotność powietrza: #{humidity}%</p><p>Zachmurzenie: #{clouds}%</p>"
 
 Pony.mail({
-  :to => 'grzeluud@gmail.com',
+  :to => 'siara11115@gmail.com',
   :subject => 'Pogoda ' + current_time ,
   :html_body => 
     '<header>
@@ -82,8 +84,8 @@ Pony.mail({
     :address              => 'smtp.gmail.com',
     :port                 => '587',
     :enable_starttls_auto => true,
-    :user_name            => #your_mail_name,
-    :password             => #your_mail_password,
+    :user_name            => #yourmailhere,
+    :password             => #yourmailpasswordhere,
     :authentication       => :plain, 
     :domain               => "localhost.localdomain"
   }
