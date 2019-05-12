@@ -3,6 +3,39 @@ require "awesome_print"
 require "json"
 require "pony"
 
+class JSONClient
+  def initialize(root_url)
+    @root_url = root_url 
+  end
+  
+  def get(path, param)
+    response = connection.get path + param +'&APPID=' + @authentication do |request|
+      request.headers["Content-Type"] = "application/json"
+    end
+    
+    body = response.body
+    json = JSON.parse(body)
+    json
+  end
+  
+  def authenticate(key) 
+    @authentication = key
+  end
+  
+  private 
+  
+  def connection
+    @connection ||= Faraday.new(:url => @root_url) do |faraday|
+      faraday.request  :url_encoded
+      faraday.adapter  Faraday.default_adapter
+    end
+  end
+end
+
+json_client = JSONClient.new('https://api.openweathermap.org')
+json_client.authenticate("cbe7de6d147912e998501c064c7d1dc4")
+
+
 def to_celcius d
   if d < 60
     celcius = (d - 32)/1.8
@@ -39,20 +72,7 @@ def translation word
   end
 end
 
-api_key = "cbe7de6d147912e998501c064c7d1dc4"
-conn = Faraday.new(:url => 'https://api.openweathermap.org') do |faraday|
-  faraday.request  :url_encoded
-  faraday.adapter  Faraday.default_adapter
-end
-
-city_name = "krzeszowice"
-
-response = conn.get '/data/2.5/weather?q=' + city_name +'&APPID=' + api_key do |request|
-  request.headers["Content-Type"] = "application/json"
-end
-body = response.body
-
-json = JSON.parse(body)
+json = json_client.get '/data/2.5/weather?q=', "krzeszowice"
 
 name = json["name"]
 weather_description = json["weather"].first["description"]
