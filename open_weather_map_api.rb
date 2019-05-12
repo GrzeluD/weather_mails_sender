@@ -3,13 +3,12 @@ require "awesome_print"
 require "json"
 require "pony"
 
-def f_to_c f
-  celsius = (f - 32)/1.8
-  return celsius.round(1)
-end
-
-def k_to_c k
-  celcius = (k - 273.15)
+def to_celcius d
+  if d < 60
+    celcius = (d - 32)/1.8
+  else
+    celcius = (d - 273.15)
+  end
   celcius.round(1)
 end
 
@@ -46,7 +45,7 @@ conn = Faraday.new(:url => 'https://api.openweathermap.org') do |faraday|
   faraday.adapter  Faraday.default_adapter
 end
 
-city_name = "krakow"
+city_name = "krzeszowice"
 
 response = conn.get '/data/2.5/weather?q=' + city_name +'&APPID=' + api_key do |request|
   request.headers["Content-Type"] = "application/json"
@@ -55,16 +54,15 @@ body = response.body
 
 json = JSON.parse(body)
 
-main = json["main"]
 name = json["name"]
 weather_description = json["weather"].first["description"]
 icon = json["weather"].first["icon"]
 icon_src = "http://openweathermap.org/img/w/" + icon + ".png"
-min_temp = f_to_c(main["temp_min"])
-max_temp = f_to_c(main["temp_max"])
-temp = if main["temp"] < 60 then f_to_c(main["temp"]) else k_to_c(main["temp"]) end
-pressure = main["pressure"]
-humidity = main["humidity"]
+min_temp = to_celcius(json["main"]["temp_min"])
+max_temp = to_celcius(json["main"]["temp_max"])
+temp =  to_celcius(json["main"]["temp"])
+pressure = json["main"]["pressure"]
+humidity = json["main"]["humidity"]
 wind_speed = json["wind"]["speed"]
 clouds = json["clouds"]["all"]
 time = Time.new
