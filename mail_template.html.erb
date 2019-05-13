@@ -1,0 +1,18 @@
+    <header>
+      <h1 style='text-align: center'>GrzeluBot v1.0</h1>
+    </header>
+    
+   <main style='line-height: 1.5'>
+     <h2 style='text-align: center'>Pogoda dla miasta <%= $name %></h2>
+     <img src=<%= $icon_src %> width='50' height ='50'>
+     <p>Warunki pogodowe: <%= $weather_description %></p>
+     <p>Temperatura: <%= $temp %> stopni Celsjusza( od <%= $min_temp %> do <%= $max_temp %> stopni )</p>
+     <p>Cisnienie: <%= $pressure %>hpa</p>
+     <p>Predkość wiatru: <%= $wind_speed %>mph</p>
+     <p>Wilgotność powietrza: <%= $humidity%>%</p>
+     <p>Zachmurzenie: <%= $clouds%>%</p>
+   </main>
+   <footer style='text-align: center; box-sizing: border-box; padding-top: 32px;'>
+        Wiadomość wygenerowana przez GrzeluBot, Pozdrawiam
+   </footer>
+  
