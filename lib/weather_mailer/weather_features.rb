@@ -1,49 +1,3 @@
-require "faraday"
-require "awesome_print"
-require "json"
-require "pony"
-require "erb"
-
-class JSONClient
-  def initialize(root_url)
-    @root_url = root_url 
-  end
-  
-  def get(path, param)
-    response = connection.get path + param +'&APPID=' + @authentication do |request|
-      request.headers["Content-Type"] = "application/json"
-    end
-    
-    body = response.body
-    json = JSON.parse(body)
-    json
-  end
-  
-  def authenticate(key) 
-    @authentication = key
-  end
-  
-  private 
-  
-  def connection
-    @connection ||= Faraday.new(:url => @root_url) do |faraday|
-      faraday.request  :url_encoded
-      faraday.adapter  Faraday.default_adapter
-    end
-  end
-end
-
-class OpenWeatherMap
-  def initialize
-    @json_client = JSONClient.new('https://api.openweathermap.org')
-    @json_client.authenticate("cbe7de6d147912e998501c064c7d1dc4")
-  end
-  
-  def search(phrase)
-    json = @json_client.get '/data/2.5/weather?q=', phrase
-  end
-end
-
 class WeatherFeatures
   attr_accessor :data
   def initialize(data) 
@@ -90,7 +44,7 @@ class WeatherFeatures
     end
   end
   
-  def set_globals
+  def build
     $name = @data["name"]
     $weather_description = translation(@data["weather"].first["description"])
     $icon = @data["weather"].first["icon"]
@@ -113,7 +67,7 @@ class WeatherFeatures
               :port                 => '587',
               :enable_starttls_auto => true,
               :user_name            => 'grzelubot@gmail.com',
-              :password             => 'password',
+              :password             => 'Grzelubot1@3',
               :authentication       => :plain, 
               :domain               => "localhost.localdomain" }
           }
@@ -121,42 +75,6 @@ class WeatherFeatures
     $details = { to: 'grzeluud@gmail.com',
             from: 'grzelubot@gmail.com',
             subject: 'Pogoda ' + $current_time, 
-            template_path: 'mail_template.html.erb'}
+            template_path: '../assets/views/mail_template.html.erb'}
   end
 end
-
-class Mailer 
-  
-  def initialize(options)
-    Pony.options = options
-  end
-  
-  def mail_details(details)
-    @to           = details[:to]
-    @from         = details[:from]
-    subject       = details[:subject]
-    template_path = details[:template_path]
-    
-    context = binding
-    body = ERB.new(File.read(template_path)).result(context)
-    Pony.mail(:to => @to, :from => @from, :subject => subject, :html_body => body)
-  end
-end
-
-
-
-class WeatherMailerApp
-  def initialize(phrase)
-    @phrase = phrase
-  end
-  
-  def run
-    bot = OpenWeatherMap.new
-    weather = bot.search @phrase
-    WeatherFeatures.new(weather).set_globals
-    mailer = Mailer.new($options)
-    mailer.mail_details($details)
-  end
-end
-
-WeatherMailerApp.new("krzeszowice").run

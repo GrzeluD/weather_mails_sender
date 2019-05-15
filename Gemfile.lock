@@ -1,0 +1,23 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    awesome_print (1.8.0)
+    faraday (0.15.4)
+      multipart-post (>= 1.2, < 3)
+    mail (2.7.1)
+      mini_mime (>= 0.1.1)
+    mini_mime (1.0.1)
+    multipart-post (2.1.1)
+    pony (1.13.1)
+      mail (>= 2.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  awesome_print
+  faraday
+  pony
+
+BUNDLED WITH
+   2.0.1
