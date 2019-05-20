@@ -1,18 +1,32 @@
-    <header>
-      <h1 style='text-align: center'>GrzeluBot v1.0</h1>
-    </header>
+  <div class="email-background" style="background: url(http://serwer.compsoul.pl/grzesiek/grzelubot/stardust.png);font-family: Verdana;padding: 10px;">
+   
+    <div class="email-container" style="color: #fff;line-height: 1.5;max-width: 500px;margin: 0 auto;overflow: hidden;">
     
-   <main style='line-height: 1.5'>
-     <h2 style='text-align: center'>Pogoda dla miasta <%= $name %></h2>
-     <img src=<%= $icon_src %> width='50' height ='50'>
-     <p>Warunki pogodowe: <%= $weather_description %></p>
-     <p>Temperatura: <%= $temp %> stopni Celsjusza( od <%= $min_temp %> do <%= $max_temp %> stopni )</p>
-     <p>Cisnienie: <%= $pressure %>hpa</p>
-     <p>Predkość wiatru: <%= $wind_speed %>mph</p>
-     <p>Wilgotność powietrza: <%= $humidity%>%</p>
-     <p>Zachmurzenie: <%= $clouds%>%</p>
-   </main>
-   <footer style='text-align: center; box-sizing: border-box; padding-top: 32px;'>
-        Wiadomość wygenerowana przez GrzeluBot, Pozdrawiam
-   </footer>
+     <header style="margin-bottom: 20px;text-align: center;">
+       <img src="http://serwer.compsoul.pl/grzesiek/grzelubot/GrzeluMan_8bit.png" alt="" width="100px" height="70px;" style="display: inline;vertical-align: middle">
+       <h1 style="display: inline;font-size: 2em;vertical-align: middle;margin-right: 20px">GrzeluBot v1.0</h1>
+      </header>
+      <div style="box-shadow: 3px 7px 29px 3px rgba(0,0,0,0.3);text-align: center;background-color: #888;margin: 25px;padding: 20px;z-index:999;">
+        <h2 style="font-size: 1.5em;">Pogoda dla miasta <%= $name %></h2>
+        
+         <img src='<%= $icon_src %>' width='50' height='50'>
+        
+        <p style="color: #222;margin: 20px;">Warunki pogodowe: <%= $weather_description %></p>
+
+        <p style="color: #222;margin: 20px;">Temperatura: <%= $temp %> stopni Celsjusza (od <%= $min_temp %> do <%= $max_temp %> stopni)</p>
+
+        <p style="color: #222;margin: 20px;">Cisnienie: <%= $pressure %>hpa</p>
+
+        <p style="color: #222;margin: 20px;">Predkość wiatru: <%= $wind_speed %>mph</p>
+
+        <p style="color: #222;margin: 20px;">Wilgotność powietrza: <%= $humidity%>%</p>
+
+        <p style="color: #222;margin: 20px;">Zachmurzenie: <%= $clouds%>%</p>
+      </div>
+    </div>
+    
+    <footer style="color: #fff;font-size: 12px;margin: 20px;text-align: center;">
+      Wiadomość wygenerowana przez GrzeluBot, Pozdrawiam.
+    </footer>
+  </div>
   

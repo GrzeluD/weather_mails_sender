@@ -67,7 +67,7 @@ class WeatherFeatures
               :port                 => '587',
               :enable_starttls_auto => true,
               :user_name            => 'grzelubot@gmail.com',
-              :password             => 'Grzelubot1@3',
+              :password             => password,
               :authentication       => :plain, 
               :domain               => "localhost.localdomain" }
           }
